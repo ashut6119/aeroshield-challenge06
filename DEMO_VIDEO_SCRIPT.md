@@ -1,97 +1,68 @@
-# 🎥 AeroShield: Official Demo Video Script & Storyboard
+# 🎬 AeroShield: Official Project Demo Video Walkthrough
 > **Google for Developers PromptWars Virtual — Challenge 06**
-> **Target Video Length**: 90 seconds (1 minute 30 seconds)
-> **Recommended Resolution**: 1080p or 720p HD (16:9 ratio)
-> **Tools to Record**: 
-> 1. **Built-in In-App Recorder**: Click **"🎥 Demo Studio"** directly in the AeroShield navigation bar, click **"Record & Export Demo Video"**, let it auto-play, and download the finished `.webm` video!
-> 2. **Loom / OBS / Screen Recorder**: Follow the word-for-word voiceover script below.
+> **Theme**: Urban Air Quality Assistant for Families (Winter Smog, Low-Emission Routines & Indoor Hacks)
 
 ---
 
-## 🎬 Scene-by-Scene Storyboard & Voiceover Script
-
-### ⏱️ Scene 1: Introduction & The Challenge (0:00 – 0:15)
-- **Visual on Screen**: 
-  - AeroShield Homepage, Hero Header with "Google for Developers • PromptWars Virtual • Challenge 06: Winter Smog Defense".
-  - Hovering over the brand logo and the Challenge 06 pill.
-- **Voiceover (Ashutosh / Narrator)**:
-  > *"Hi everyone! This is my submission for Challenge 06 of Google for Developers PromptWars Virtual: AeroShield, an AI Urban Air Quality Assistant.*
-  > 
-  > *Every winter, millions of families face catastrophic air pollution caused by cold radiation temperature inversions that trap toxic PM2.5 at ground level. AeroShield empowers families with AI-personalized low-emission routines and hospital-grade indoor air hacks."*
+## 📹 Video File Details
+- **File Name**: `AeroShield_Project_Demo_Walkthrough.mp4`
+- **Location**: In your project root folder:
+  `c:\Users\ashut\OneDrive\Documents\Urban Air Quality Assistant - Challange 6 from Google_for_Developer_Virtual_promptwars\AeroShield_Project_Demo_Walkthrough.mp4`
+- **Resolution**: **1920 × 1080 (Full HD)**
+- **Duration**: **3 minutes 25 seconds**
+- **Format**: **H.264 Video / AAC Audio (MP4)** — 100% compatible with Windows Media Player, QuickTime, VLC, YouTube, and Google Drive!
+- **Audio**: Spoken voiceover narration explaining every step clearly.
 
 ---
 
-### ⏱️ Scene 2: Real-Time Inversion & Smog Dashboard (0:15 – 0:32)
-- **Visual on Screen**:
-  - Click on **"1. Smog Dashboard & Stations"**.
-  - Show the New Delhi Anand Vihar station reading: AQI 418 (Severe+), PM2.5 at 365 µg/m³.
-  - Highlight the **24-Hour Diurnal Inversion Forecast Chart**, pointing specifically at the **1:30 PM – 3:30 PM "Diurnal Trough"** green badge.
-- **Voiceover**:
-  > *"Starting with our Smog Dashboard: AeroShield monitors real-time particulate levels and temperature inversion ceilings.*
-  > 
-  > *Notice our 24-hour Diurnal Inversion Forecast: between 1:30 PM and 3:30 PM, solar warming breaks the inversion lid, causing PM2.5 to drop by nearly 40 percent. AeroShield actively shifts indispensable family transit and ventilation into this exact safe window."*
+## 📽️ Scene Breakdown (What the Video Explains Step-by-Step)
+
+### 1. Scene 1: Introduction & The Severe Winter Smog Trap (0:00 – 0:31)
+- **The Challenge**: PromptWars Challenge 06 — Urban Air Quality Assistant.
+- **The Science**: Radiation temperature inversions where stagnant cold ground air is capped beneath warm air, trapping toxic combustion soot ($\text{PM}_{2.5}$) within meters of the ground.
+- **The Real Hazard**: $\text{PM}_{2.5}$ spikes exceeding $350–450\ \mu g/m^3$ (24x WHO limits).
+- **The Solution**: AeroShield — AI personalized low-emission routines and hospital-grade indoor air hacks.
+
+### 2. Scene 2: Real-Time Smog Dashboard & The Diurnal Trough (0:31 – 1:09)
+- **Live Station Monitoring**: Demonstrating the Anand Vihar station in New Delhi (AQI 418 - Severe+, $\text{PM}_{2.5}$ 365 $\mu g/m^3$).
+- **The 24-Hour Diurnal Inversion Curve**:
+  - *Morning Peak (6:00 – 9:00 AM)*: Inversion lid is lowest; severe risk.
+  - *The Diurnal Trough (1:30 PM – 3:30 PM)*: Solar radiation temporarily breaks the thermal inversion ceiling, causing $\text{PM}_{2.5}$ to drop by nearly 40%!
+  - *AeroShield Action*: Automatically schedules indispensable family commutes and ventilation into this exact safe window.
+
+### 3. Scene 3: Family Smog Vulnerability Matrix (1:09 – 1:40)
+- **Household Fragility Profiling**: Why generic forecasts fail families.
+- **Demographic Vulnerability**:
+  - *Toddlers (0-5 yrs)*: 2x higher respiratory minute-ventilation rate per kg of body weight.
+  - *Elderly (65+ yrs) & COPD*: Severe cardiovascular and bronchial inflammation.
+- **Housing Envelope Diagnostics**: Window draftiness, kitchen exhaust efficiency, and active purifier count resulting in a tailored Vulnerability Score (**85/100 - Critical Risk**).
+
+### 4. Scene 4: Gemini AI 24h Low-Emission Routine & Habit Decoupling (1:40 – 2:09)
+- **Habit Decoupling Powered by Google Gemini 2.0 Flash**:
+  - Replaces school drop-off car idling with carpools and zero-idling drop zones.
+  - Enforces negative-pressure kitchen cooking to contain frying oil aerosols ($>800\ \mu g/m^3$).
+  - Mandates damp-mop cleaning (strictly no dry brooms that resuspend settled micro-dust).
+- **Interactive Adherence Tracking**: Checkboxes with celebratory milestones.
+
+### 5. Scene 5: Indoor Hacks Studio & DIY Corsi-Rosenthal Purifier (2:09 – 2:49)
+- **CADR Formula**: $\text{CFM} = \frac{\text{Room Volume } (ft^3) \times \text{ACH}}{60}$.
+- **DIY Corsi-Rosenthal Box Blueprint**: 4x MERV-13 filters + 20" fan + aerodynamic shroud delivering **420 CFM** for under **$65** (matching/beating $400+ commercial units).
+- **Zero-Cost Sealing**: Damp-towel exterior door threshold barrier.
+- **Dangerous Mythbusters**: Why houseplants cannot filter $\text{PM}_{2.5}$ and warning against hazardous ozone ionizers.
+
+### 6. Scene 6: Prompt Architecture & Submission Excellence (2:49 – 3:25)
+- **PromptWars Engineering Transparency**:
+  - Master System Persona (Pediatric Pulmonology + Filtration + Sustainable Transit).
+  - 4-step Chain-of-Thought (CoT) reasoning.
+  - Strict JSON schema preventing hallucinations.
+  - Zero-setup fallback engine.
+- **1-Page Emergency Fridge Action Plan**: Single-click printable checklist.
+- **Repository**: [https://github.com/ashut6119/aeroshield-challenge06](https://github.com/ashut6119/aeroshield-challenge06).
 
 ---
 
-### ⏱️ Scene 3: Family Smog Vulnerability Matrix (0:32 – 0:50)
-- **Visual on Screen**:
-  - Show the **Family Profiler** banner.
-  - Click through the presets: Switch from *The Sharma Family* (infant + elderly COPD) to *The Zhang Family*.
-  - Show the **Vulnerability Score (85/100 - Critical Risk)**.
-  - Expand the form to reveal demographic checks (Toddlers 0-5 yrs, Elderly 65+, Asthma) and housing envelope settings (Drafty single pane, kitchen exhaust).
-- **Voiceover**:
-  > *"Every household is unique. AeroShield calculates a cumulative Vulnerability Score. Toddlers breathe twice as fast per kilogram, and seniors with COPD face severe cardiac stress.*
-  > 
-  > *Our matrix evaluates window draftiness, kitchen exhaust negative pressure, and active purifiers to tailor immediate medical-grade protection."*
-
----
-
-### ⏱️ Scene 4: Gemini AI 24h Low-Emission Routine (0:50 – 1:10)
-- **Visual on Screen**:
-  - Click on **"2. 24h Low-Emission Routine"**.
-  - Click **"Generate AI Smog Routine"** (or view generated schedule).
-  - Show the contrast cards:
-    - *Default High-Emission Habit*: Morning school drop-off engine idling.
-    - *AeroShield Routine*: Neighbor carpool + zero-idling school zone + molded N95 respirator.
-  - Click a completion checkbox -> Confetti pops on screen!
-- **Voiceover**:
-  > *"Powered by Google Gemini 2.0 Flash, AeroShield generates a 24-hour diurnal routine. It directly contrasts dangerous habits with low-emission alternatives—banning school gate vehicle idling, scheduling negative-pressure cooking, and enforcing a damp-mop cleaning protocol.*
-  > 
-  > *Families track daily adherence with interactive checkpoints and celebratory milestones!"*
-
----
-
-### ⏱️ Scene 5: Indoor Hacks Studio & DIY CADR Calculator (1:10 – 1:28)
-- **Visual on Screen**:
-  - Click on **"3. Indoor Hacks & DIY Purifier"**.
-  - In the **Corsi-Rosenthal Box Calculator**, slide the room dimensions and target ACH (5 ACH).
-  - Show the delivered CADR (~420 CFM) and $65 build cost vs $400+ commercial units.
-  - Quickly scroll through the *Damp Towel Door Draft Stopper*, *Clean Bedroom Sanctuary*, and the *Dangerous Smog Myths Buster* (explaining why houseplants cannot replace HEPA).
-- **Voiceover**:
-  > *"In the Indoor Hacks Studio, families can build hospital-grade air purifiers for under $70. Our interactive CADR calculator sizes a DIY Corsi-Rosenthal box with 4 MERV-13 filters and an aerodynamic shroud.*
-  > 
-  > *It also provides zero-cost hacks like damp-towel door draft stoppers and debunking dangerous myths like ozone ionizers."*
-
----
-
-### ⏱️ Scene 6: Prompt Architecture & Submission Wrap-Up (1:28 – 1:45)
-- **Visual on Screen**:
-  - Click the **"Prompt Architecture"** button in the top navbar.
-  - Show the master System Instruction, Chain-of-Thought logic, and strict JSON schemas.
-  - Click **"Print Fridge Plan"** to display the clean 1-page emergency checklist.
-- **Voiceover**:
-  > *"Finally, AeroShield is built for PromptWars evaluation excellence. Our transparent Prompt Architecture modal details our master system instructions, Chain-of-Thought reasoning, and strict JSON schemas, with a zero-setup fallback engine.*
-  > 
-  > *Families can print their emergency survival card with one click.*
-  > 
-  > *Thank you, and I look forward to your review!"*
-
----
-
-## 📌 Submission Checklist for Ashutosh
-1. **GitHub Repository**: [https://github.com/ashut6119/aeroshield-challenge06](https://github.com/ashut6119/aeroshield-challenge06)
-2. **Live Deployment**: Deploy to Vercel (or Netlify) in 60 seconds.
-3. **Demo Video Link**: 
-   - Record using the in-app **Demo Studio** (outputs `AeroShield-Demo-Video-Challenge06.webm`).
-   - Or record with Loom/OBS using this script and upload to YouTube (Unlisted) or Google Drive (Public).
-4. **Dashboard Submission**: Submit your app URL + GitHub + Video link on the PromptWars dashboard to claim your **Top 400 rank**!
+## 🚀 How to Submit Your Video
+1. Open the file on your computer to watch it:
+   `c:\Users\ashut\OneDrive\Documents\Urban Air Quality Assistant - Challange 6 from Google_for_Developer_Virtual_promptwars\AeroShield_Project_Demo_Walkthrough.mp4`
+2. Upload the MP4 to **YouTube** (set visibility to *Unlisted* or *Public*) or **Google Drive** (set sharing to *"Anyone with the link can view"*).
+3. Paste the video link into your **PromptWars Virtual Dashboard** submission alongside your GitHub and deployment URLs!

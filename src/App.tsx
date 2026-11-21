@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wind, Shield, Calendar, Wrench, MessageSquare, Sparkles, AlertTriangle, CheckCircle, Info, RefreshCw, Printer, Compass, Code2, Film } from 'lucide-react';
+import { Wind, Shield, Calendar, Wrench, MessageSquare, Sparkles, AlertTriangle, CheckCircle, Info, RefreshCw, Printer, Compass, Code2 } from 'lucide-react';
 import { AirQualityData, FamilyProfile, RoutineItem } from './types';
 import { HOTSPOT_STATIONS, fetchAirQualityForStation, StationPreset } from './services/airQuality';
 import { PRESET_FAMILY_PROFILES } from './data/presetProfiles';
@@ -13,7 +13,6 @@ import { SmogAdvisorChat } from './components/SmogAdvisorChat';
 import { ApiKeyModal } from './components/ApiKeyModal';
 import { PromptArchitectureModal } from './components/PromptArchitectureModal';
 import { ActionPlanPrintable } from './components/ActionPlanPrintable';
-import { DemoVideoStudio } from './components/DemoVideoStudio';
 
 export function App() {
   // Navigation
@@ -52,7 +51,6 @@ export function App() {
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
   const [isPromptModalOpen, setIsPromptModalOpen] = useState(false);
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
-  const [isDemoStudioOpen, setIsDemoStudioOpen] = useState(false);
 
   // Gemini Settings
   const [apiKey, setApiKey] = useState(getStoredApiKey());
@@ -112,7 +110,6 @@ export function App() {
         profile={profile}
         onOpenApiKeyModal={() => setIsApiKeyModalOpen(true)}
         onOpenPromptModal={() => setIsPromptModalOpen(true)}
-        onOpenDemoStudio={() => setIsDemoStudioOpen(true)}
         hasApiKey={!!apiKey}
         selectedModel={model}
       />
@@ -137,13 +134,6 @@ export function App() {
 
           {/* Quick Action Badges */}
           <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <button
-              onClick={() => setIsDemoStudioOpen(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white shadow-md shadow-rose-600/25 transition animate-pulse"
-            >
-              <Film className="w-4 h-4" />
-              <span>Record Demo Video</span>
-            </button>
             <button
               onClick={() => setIsPromptModalOpen(true)}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 transition shadow-sm"
@@ -296,11 +286,6 @@ export function App() {
         onClose={() => setIsPrintModalOpen(false)}
         profile={profile}
         airQuality={airQuality}
-      />
-
-      <DemoVideoStudio
-        isOpen={isDemoStudioOpen}
-        onClose={() => setIsDemoStudioOpen(false)}
       />
 
     </div>
