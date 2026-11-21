@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wind, Shield, Key, Sparkles, Code2, AlertTriangle } from 'lucide-react';
+import { Wind, Shield, Key, Sparkles, Code2, AlertTriangle, Film } from 'lucide-react';
 import { AirQualityData, FamilyProfile } from '../types';
 
 interface NavbarProps {
@@ -7,6 +7,7 @@ interface NavbarProps {
   profile: FamilyProfile;
   onOpenApiKeyModal: () => void;
   onOpenPromptModal: () => void;
+  onOpenDemoStudio: () => void;
   hasApiKey: boolean;
   selectedModel: string;
 }
@@ -16,6 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   profile,
   onOpenApiKeyModal,
   onOpenPromptModal,
+  onOpenDemoStudio,
   hasApiKey,
   selectedModel
 }) => {
@@ -65,6 +67,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right CTA / Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Demo Video Studio Button */}
+          <button
+            onClick={onOpenDemoStudio}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 transition-colors shadow-sm animate-pulse"
+            title="Record or Watch 90s Project Demo Video"
+          >
+            <Film className="w-4 h-4 text-rose-400" />
+            <span className="hidden sm:inline">Demo Video Studio</span>
+          </button>
+
           {/* Prompt Architecture Modal Button (PromptWars Feature) */}
           <button
             onClick={onOpenPromptModal}
