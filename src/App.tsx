@@ -256,7 +256,7 @@ export function App() {
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-slate-950 py-8 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 space-y-2">
+        <div className="max-w-7xl mx-auto px-4 space-y-3">
           <div className="flex items-center justify-center gap-2 font-semibold text-slate-400">
             <span>AeroShield</span>
             <span>•</span>
@@ -264,7 +264,37 @@ export function App() {
             <span>•</span>
             <span>Powered by Google Gemini 2.0</span>
           </div>
-          <p className="text-slate-500 max-w-xl mx-auto text-[11px]">
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1 text-slate-400 text-[11px]">
+            <a
+              href="https://aeroshield-challenge06.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2 transition"
+            >
+              🌐 Live App: aeroshield-challenge06.vercel.app
+            </a>
+            <span>•</span>
+            <a
+              href="https://drive.google.com/drive/folders/159YngPfFNl5cHYcoJDLojCrrnDkwTNQd"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-400 hover:text-amber-300 underline underline-offset-2 transition"
+            >
+              🎥 Demo Video Submission (Google Drive)
+            </a>
+            <span>•</span>
+            <a
+              href="https://github.com/ashut6119/aeroshield-challenge06"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-300 hover:text-white underline underline-offset-2 transition"
+            >
+              💻 GitHub Source
+            </a>
+          </div>
+
+          <p className="text-slate-500 max-w-xl mx-auto text-[11px] pt-1">
             Designed to safeguard families during severe winter smog using proven atmospheric physics, clinical environmental medicine, and community low-emission routines.
           </p>
         </div>

@@ -2,6 +2,8 @@
 
 [![Google for Developers](https://img.shields.io/badge/Google%20for%20Developers-PromptWars%20Virtual-4285F4?logo=google&logoColor=white)](https://developers.google.com)
 [![Challenge](https://img.shields.io/badge/Challenge%2006-Urban%20Air%20Quality%20Assistant-10b981)](https://developers.google.com)
+[![Live Demo](https://img.shields.io/badge/Live%20App-aeroshield--challenge06.vercel.app-10b981?logo=vercel&logoColor=white)](https://aeroshield-challenge06.vercel.app/)
+[![Demo Video](https://img.shields.io/badge/Demo%20Video-Google%20Drive-FF8800?logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/159YngPfFNl5cHYcoJDLojCrrnDkwTNQd)
 [![Gemini](https://img.shields.io/badge/Powered%20By-Google%20Gemini%202.0%20Flash-8B5CF6?logo=googlegemini&logoColor=white)](https://ai.google.dev)
 [![React](https://img.shields.io/badge/React%2018-TypeScript%20%2B%20TailwindCSS-06B6D4?logo=react&logoColor=white)](https://react.dev)
 [![Tests](https://img.shields.io/badge/Vitest-47%2F47%20Passed-brightgreen)](https://vitest.dev)
@@ -9,6 +11,14 @@
 
 > **Challenge 06 Problem Statement**:  
 > *"Build an Urban Air Quality Assistant to help families beat severe winter smog with personalized low-emission routines and indoor air hacks."*
+
+---
+
+## 🔗 Project Links
+
+- **🌐 Live Deployed Application**: [https://aeroshield-challenge06.vercel.app/](https://aeroshield-challenge06.vercel.app/)
+- **🎥 Project Demo Video Submission**: [https://drive.google.com/drive/folders/159YngPfFNl5cHYcoJDLojCrrnDkwTNQd](https://drive.google.com/drive/folders/159YngPfFNl5cHYcoJDLojCrrnDkwTNQd)
+- **💻 GitHub Source Code Repository**: [https://github.com/ashut6119/aeroshield-challenge06](https://github.com/ashut6119/aeroshield-challenge06)
 
 ---
 
