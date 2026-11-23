@@ -21,6 +21,15 @@ export interface AirQualityData {
   hourlyForecast: { hour: string; aqi: number; tempC: number; inversion: boolean }[];
 }
 
+export type HomeType = 'apartment_high_floor' | 'apartment_ground_floor' | 'independent_house' | 'old_construction';
+export type WindowDraftLevel = 'tight_double_glaze' | 'moderate_gaps' | 'drafty_single_pane';
+export type KitchenSetup = 'ducted_chimney_hood' | 'simple_exhaust_fan' | 'window_only';
+export type HeatingType = 'reverse_cycle_ac' | 'electric_radiator' | 'space_heater' | 'wood_coal_stove';
+export type BudgetTier = 'zero_cost' | 'budget_under_50' | 'prepared_investment';
+export type CommuteMode = 'public_transit' | 'carpool' | 'solo_car' | 'two_wheeler_bike' | 'walking';
+export type TabType = 'dashboard' | 'routine' | 'hacks' | 'advisor';
+export type PromptTabType = 'system' | 'chain_of_thought' | 'schema' | 'logs';
+
 export interface FamilyProfile {
   familyNickname: string;
   city: string;
@@ -32,13 +41,13 @@ export interface FamilyProfile {
   respiratoryConditions: string[]; // 'Asthma', 'COPD', 'Dust Allergy', 'Bronchitis', 'None'
   hasPets: boolean;
   petType?: string;
-  homeType: 'apartment_high_floor' | 'apartment_ground_floor' | 'independent_house' | 'old_construction';
-  windowDraftLevel: 'tight_double_glaze' | 'moderate_gaps' | 'drafty_single_pane';
-  kitchenSetup: 'ducted_chimney_hood' | 'simple_exhaust_fan' | 'window_only';
-  heatingType: 'reverse_cycle_ac' | 'electric_radiator' | 'space_heater' | 'wood_coal_stove';
+  homeType: HomeType;
+  windowDraftLevel: WindowDraftLevel;
+  kitchenSetup: KitchenSetup;
+  heatingType: HeatingType;
   purifierCount: number;
-  budgetTier: 'zero_cost' | 'budget_under_50' | 'prepared_investment';
-  commuteMode: 'public_transit' | 'carpool' | 'solo_car' | 'two_wheeler_bike' | 'walking';
+  budgetTier: BudgetTier;
+  commuteMode: CommuteMode;
 }
 
 export interface RoutineItem {

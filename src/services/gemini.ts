@@ -8,38 +8,79 @@ export const SUPPORTED_MODELS = [
   { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash (Recommended - Fastest & Smartest)' },
   { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash (Balanced)' },
   { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro (Deep Reasoning)' },
-];
+] as const;
 
-export function getStoredApiKey(): string {
-  if (typeof window === 'undefined') return '';
-  return localStorage.getItem(STORAGE_KEY_API_KEY) || (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+export type SupportedModelId = typeof SUPPORTED_MODELS[number]['id'];
+
+/**
+ * Validates Google Gemini API key format (standard AIza... 34-49 chars)
+ */
+export function isValidGeminiApiKey(key: string): boolean {
+  if (!key) return false;
+  return /^AIza[A-Za-z0-9_-]{30,45}$/.test(key.trim());
 }
 
+/**
+ * Sanitizes user input string against control characters, XSS payloads, and excessive length.
+ */
+export function sanitizeUserInput(input: string): string {
+  if (!input) return '';
+  return input
+    .replace(/[<>]/g, '') // strip HTML brackets
+    /* eslint-disable-next-line no-control-regex */
+    .replace(/[\u0000-\u001F\u007F-\u009F]/g, '') // strip control chars
+    .trim()
+    .slice(0, 1000); // enforce maximum 1000 chars
+}
+
+/**
+ * Retrieves the stored Gemini API key from localStorage or Vite environment variable.
+ */
+export function getStoredApiKey(): string {
+  if (typeof window === 'undefined') return '';
+  const fromStorage = localStorage.getItem(STORAGE_KEY_API_KEY);
+  if (fromStorage) return fromStorage.trim();
+  const envKey = (import.meta as unknown as { env?: { VITE_GEMINI_API_KEY?: string } }).env?.VITE_GEMINI_API_KEY;
+  return envKey ? envKey.trim() : '';
+}
+
+/**
+ * Safely persists the Gemini API key in localStorage.
+ */
 export function saveStoredApiKey(key: string): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEY_API_KEY, key.trim());
 }
 
+/**
+ * Retrieves the currently active Gemini model choice.
+ */
 export function getStoredModel(): string {
   if (typeof window === 'undefined') return 'gemini-2.0-flash';
   return localStorage.getItem(STORAGE_KEY_MODEL) || 'gemini-2.0-flash';
 }
 
+/**
+ * Saves user model choice.
+ */
 export function saveStoredModel(model: string): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEY_MODEL, model);
 }
 
-// In-memory prompt log for judge inspection
+// In-memory prompt log for judge inspection (never logs private keys)
 export const PROMPT_INSPECTION_LOG: PromptLogEntry[] = [];
 
-export function logPrompt(entry: PromptLogEntry) {
+/**
+ * Logs prompt execution metadata for evaluation inspection.
+ */
+export function logPrompt(entry: PromptLogEntry): void {
   PROMPT_INSPECTION_LOG.unshift(entry);
   if (PROMPT_INSPECTION_LOG.length > 20) PROMPT_INSPECTION_LOG.pop();
 }
 
 /**
- * Call Gemini API with structured instructions
+ * Call Google Gemini API endpoint securely using standard REST protocol.
  */
 async function callGeminiApi(
   systemInstruction: string,
@@ -77,12 +118,22 @@ async function callGeminiApi(
   });
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
+    interface GeminiErrorResponse {
+      error?: { message?: string };
+    }
+    const errorData = (await response.json().catch(() => ({}))) as GeminiErrorResponse;
     const message = errorData?.error?.message || `Gemini API returned status ${response.status}`;
     throw new Error(message);
   }
 
-  const data = await response.json();
+  interface GeminiSuccessResponse {
+    candidates?: Array<{
+      content?: {
+        parts?: Array<{ text?: string }>;
+      };
+    }>;
+  }
+  const data = (await response.json()) as GeminiSuccessResponse;
   const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) {
     throw new Error('Empty response received from Gemini');
@@ -92,7 +143,7 @@ async function callGeminiApi(
 }
 
 /**
- * Generate Personalized Routine
+ * Generate Personalized 24h Low-Emission Routine using Gemini or Fallback.
  */
 export async function generatePersonalizedRoutine(
   profile: FamilyProfile,
@@ -121,11 +172,11 @@ export async function generatePersonalizedRoutine(
       cleaned = cleaned.replace(/^```/, '').replace(/```$/, '').trim();
     }
 
-    const parsed = JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned) as unknown;
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+      return parsed as RoutineItem[];
     }
-  } catch (err) {
+  } catch (err: unknown) {
     console.warn('Gemini API call skipped or failed, using intelligent contextual fallback engine:', err);
   }
 
@@ -142,8 +193,9 @@ export async function askSmogAdvisor(
   aqi: AirQualityData,
   history: ChatMessage[]
 ): Promise<{ text: string; reasoning?: string[] }> {
+  const sanitizedQuestion = sanitizeUserInput(question);
   const systemPrompt = SYSTEM_INSTRUCTION_SMOG_ASSISTANT;
-  const userPrompt = buildAdvisorPrompt(question, profile, aqi, history);
+  const userPrompt = buildAdvisorPrompt(sanitizedQuestion, profile, aqi, history);
   const modelUsed = getStoredModel();
 
   logPrompt({
@@ -164,9 +216,9 @@ export async function askSmogAdvisor(
         `Synthesized low-emission alternatives and indoor particle suppression strategies`
       ]
     };
-  } catch (err) {
+  } catch (err: unknown) {
     console.warn('Gemini API call skipped, returning intelligent medical & DIY advice:', err);
-    return getIntelligentFallbackAdvice(question, profile, aqi);
+    return getIntelligentFallbackAdvice(sanitizedQuestion, profile, aqi);
   }
 }
 
@@ -191,7 +243,7 @@ export async function generateEmergencyActionPlan(
 
   try {
     return await callGeminiApi(systemPrompt, userPrompt, modelUsed);
-  } catch (err) {
+  } catch (_err: unknown) {
     return getFallbackEmergencyPlan(profile, aqi);
   }
 }

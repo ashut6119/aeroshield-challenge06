@@ -1,0 +1,21 @@
+import { vi } from 'vitest';
+import '@testing-library/jest-dom';
+
+// Mock canvas-confetti
+vi.mock('canvas-confetti', () => ({
+  default: vi.fn(),
+}));
+
+// Mock window.speechSynthesis if missing
+if (typeof window !== 'undefined' && !('speechSynthesis' in window)) {
+  Object.defineProperty(window, 'speechSynthesis', {
+    value: {
+      speak: vi.fn(),
+      cancel: vi.fn(),
+      pause: vi.fn(),
+      resume: vi.fn(),
+      getVoices: vi.fn().mockReturnValue([]),
+    },
+    writable: true,
+  });
+}

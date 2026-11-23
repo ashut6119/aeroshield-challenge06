@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Wind, Shield, Calendar, Wrench, MessageSquare, Sparkles, AlertTriangle, CheckCircle, Info, RefreshCw, Printer, Compass, Code2 } from 'lucide-react';
-import { AirQualityData, FamilyProfile, RoutineItem } from './types';
+import { Calendar, Wrench, MessageSquare, Printer, Compass, Code2 } from 'lucide-react';
+import { AirQualityData, FamilyProfile, RoutineItem, TabType } from './types';
 import { HOTSPOT_STATIONS, fetchAirQualityForStation, StationPreset } from './services/airQuality';
 import { PRESET_FAMILY_PROFILES } from './data/presetProfiles';
 import { getStoredApiKey, getStoredModel, generatePersonalizedRoutine } from './services/gemini';
@@ -16,7 +16,7 @@ import { ActionPlanPrintable } from './components/ActionPlanPrintable';
 
 export function App() {
   // Navigation
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'routine' | 'hacks' | 'advisor'>('dashboard');
+  const [activeTab, setActiveTab] = useState<TabType>('dashboard');
 
   // Station and Air Quality State
   const [selectedStation, setSelectedStation] = useState<StationPreset>(HOTSPOT_STATIONS[0]);
@@ -154,17 +154,21 @@ export function App() {
 
       {/* Main Tab Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
-        <div className="flex items-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto scrollbar-none shadow-lg">
+        <div role="tablist" aria-label="Main Application Views" className="flex items-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto scrollbar-none shadow-lg">
           {[
-            { id: 'dashboard', label: '1. Smog Dashboard & Stations', icon: <Compass className="w-4 h-4" /> },
-            { id: 'routine', label: '2. 24h Low-Emission Routine', icon: <Calendar className="w-4 h-4" /> },
-            { id: 'hacks', label: '3. Indoor Hacks & DIY Purifier', icon: <Wrench className="w-4 h-4" /> },
-            { id: 'advisor', label: '4. AI Smog Doctor & Coping', icon: <MessageSquare className="w-4 h-4" /> },
+            { id: 'dashboard' as TabType, label: '1. Smog Dashboard & Stations', icon: <Compass className="w-4 h-4" aria-hidden="true" /> },
+            { id: 'routine' as TabType, label: '2. 24h Low-Emission Routine', icon: <Calendar className="w-4 h-4" aria-hidden="true" /> },
+            { id: 'hacks' as TabType, label: '3. Indoor Hacks & DIY Purifier', icon: <Wrench className="w-4 h-4" aria-hidden="true" /> },
+            { id: 'advisor' as TabType, label: '4. AI Smog Doctor & Coping', icon: <MessageSquare className="w-4 h-4" aria-hidden="true" /> },
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls={`panel-${tab.id}`}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                 activeTab === tab.id
                   ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/25'
                   : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -178,7 +182,7 @@ export function App() {
       </div>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full flex-1 space-y-6">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full flex-1 space-y-6 focus:outline-none">
         
         {/* Always visible or tab-linked: Family Profiler */}
         <FamilyProfiler

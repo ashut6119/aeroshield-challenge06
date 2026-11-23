@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, CheckCircle2, Clock, Sparkles, AlertCircle, ArrowRight, ShieldCheck, Flame, Bike, Utensils, Moon, Sun, Printer, Check } from 'lucide-react';
+import { Calendar, Clock, Sparkles, AlertCircle, ShieldCheck, Flame, Moon, Sun, Printer, Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { RoutineItem, FamilyProfile, AirQualityData } from '../types';
 
@@ -16,10 +16,10 @@ interface RoutineGeneratorProps {
 export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
   routines,
   profile,
-  airQuality,
+  airQuality: _airQuality,
   onToggleComplete,
-  onRegenerate,
-  isGenerating,
+  onRegenerate: _onRegenerate,
+  isGenerating: _isGenerating,
   onOpenPrintModal
 }) => {
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
@@ -105,15 +105,20 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
             onClick={onOpenPrintModal}
             className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition"
             title="Export 1-Page Emergency Action Plan"
+            aria-label="Export 1-Page Emergency Action Plan for printing"
           >
-            <Printer className="w-3.5 h-3.5 text-slate-300" />
+            <Printer className="w-3.5 h-3.5 text-slate-300" aria-hidden="true" />
             <span className="hidden sm:inline">Print Fridge Plan</span>
           </button>
         </div>
       </div>
 
       {/* Phase Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto py-4 scrollbar-none">
+      <div 
+        className="flex items-center gap-2 overflow-x-auto py-4 scrollbar-none"
+        role="tablist"
+        aria-label="Filter routines by time of day"
+      >
         {[
           { id: 'all', label: 'Full 24h Day' },
           { id: 'morning', label: 'Morning (Inversion Peak)' },
@@ -124,6 +129,10 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
         ].map((tab) => (
           <button
             key={tab.id}
+            role="tab"
+            aria-selected={selectedPhase === tab.id}
+            aria-controls="routines-list"
+            id={`tab-phase-${tab.id}`}
             onClick={() => setSelectedPhase(tab.id)}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
               selectedPhase === tab.id
@@ -137,7 +146,12 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
       </div>
 
       {/* Routine Cards Grid */}
-      <div className="space-y-4 pt-2">
+      <div 
+        id="routines-list" 
+        role="tabpanel" 
+        aria-labelledby={`tab-phase-${selectedPhase}`}
+        className="space-y-4 pt-2"
+      >
         {filteredRoutines.map((item) => {
           const isDone = !!item.completed;
           return (
@@ -153,6 +167,9 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2.5">
                   <button
+                    role="checkbox"
+                    aria-checked={isDone}
+                    aria-label={`Mark routine "${item.title}" as ${isDone ? 'incomplete' : 'complete'}`}
                     onClick={() => handleCheckbox(item.id, item.completed)}
                     className={`w-6 h-6 rounded-lg flex items-center justify-center border transition-all ${
                       isDone
@@ -160,7 +177,7 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
                         : 'border-slate-700 bg-slate-900 hover:border-emerald-500'
                     }`}
                   >
-                    {isDone && <Check className="w-4 h-4 stroke-[3]" />}
+                    {isDone && <Check className="w-4 h-4 stroke-[3]" aria-hidden="true" />}
                   </button>
 
                   <div className="flex items-center gap-2">

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { X, Code2, ShieldCheck, Terminal, Layers, Sparkles, BookOpen } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Code2, ShieldCheck, Terminal, Layers, Sparkles } from 'lucide-react';
 import { SYSTEM_INSTRUCTION_SMOG_ASSISTANT } from '../prompts/templates';
 import { PROMPT_INSPECTION_LOG } from '../services/gemini';
+import { PromptTabType } from '../types';
 
 interface PromptArchitectureModalProps {
   isOpen: boolean;
@@ -9,30 +10,49 @@ interface PromptArchitectureModalProps {
 }
 
 export const PromptArchitectureModal: React.FC<PromptArchitectureModalProps> = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'system' | 'chain_of_thought' | 'schema' | 'logs'>('system');
+  const [activeTab, setActiveTab] = useState<PromptTabType>('system');
+
+  // Handle keyboard Escape key to close modal
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="prompt-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+    >
       <div className="bg-slate-900 border border-slate-700 rounded-3xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl shadow-indigo-500/10 relative text-slate-100 max-h-[90vh] flex flex-col">
         
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition"
+          aria-label="Close Prompt Architecture modal"
+          className="absolute top-5 right-5 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition focus-visible:ring-2 focus-visible:ring-indigo-400"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5" aria-hidden="true" />
         </button>
 
         {/* Modal Title */}
         <div className="flex items-center gap-3 mb-6 shrink-0">
           <div className="p-3 bg-indigo-500/20 text-indigo-400 rounded-2xl border border-indigo-500/30">
-            <Code2 className="w-6 h-6" />
+            <Code2 className="w-6 h-6" aria-hidden="true" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-xl font-black text-white">PromptWars Architecture & Transparency Showcase</h3>
+              <h2 id="prompt-modal-title" className="text-xl font-black text-white">
+                PromptWars Architecture & Transparency Showcase
+              </h2>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
                 Evaluation Scorecard
               </span>
@@ -44,17 +64,20 @@ export const PromptArchitectureModal: React.FC<PromptArchitectureModalProps> = (
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3 shrink-0 overflow-x-auto scrollbar-none">
+        <div role="tablist" aria-label="Prompt Architecture Sections" className="flex items-center gap-2 border-b border-slate-800 pb-3 shrink-0 overflow-x-auto scrollbar-none">
           {[
-            { id: 'system', label: '1. System Prompt & Persona', icon: <ShieldCheck className="w-4 h-4" /> },
-            { id: 'chain_of_thought', label: '2. Chain-of-Thought Logic', icon: <Layers className="w-4 h-4" /> },
-            { id: 'schema', label: '3. Structured Output & JSON Schema', icon: <Terminal className="w-4 h-4" /> },
-            { id: 'logs', label: `4. Live Prompt Logs (${PROMPT_INSPECTION_LOG.length})`, icon: <Sparkles className="w-4 h-4" /> }
+            { id: 'system' as PromptTabType, label: '1. System Prompt & Persona', icon: <ShieldCheck className="w-4 h-4" aria-hidden="true" /> },
+            { id: 'chain_of_thought' as PromptTabType, label: '2. Chain-of-Thought Logic', icon: <Layers className="w-4 h-4" aria-hidden="true" /> },
+            { id: 'schema' as PromptTabType, label: '3. Structured Output & JSON Schema', icon: <Terminal className="w-4 h-4" aria-hidden="true" /> },
+            { id: 'logs' as PromptTabType, label: `4. Live Prompt Logs (${PROMPT_INSPECTION_LOG.length})`, icon: <Sparkles className="w-4 h-4" aria-hidden="true" /> }
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-indigo-400 ${
                 activeTab === tab.id
                   ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
                   : 'bg-slate-950 text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-slate-800'
@@ -82,7 +105,7 @@ export const PromptArchitectureModal: React.FC<PromptArchitectureModalProps> = (
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl">
-                  <h5 className="font-bold text-white mb-1">Key Prompt Engineering Highlights:</h5>
+                  <h3 className="font-bold text-white mb-1">Key Prompt Engineering Highlights:</h3>
                   <ul className="list-disc list-inside space-y-1 text-slate-400">
                     <li><strong className="text-slate-200">Grounded Persona:</strong> Combines Pediatric Pulmonology, Filtration Engineering, and Sustainable Transit.</li>
                     <li><strong className="text-slate-200">Atmospheric Physics:</strong> Explicit instruction on Boundary Layer Thermal Inversion and the 1-3 PM diurnal trough.</li>
@@ -91,7 +114,7 @@ export const PromptArchitectureModal: React.FC<PromptArchitectureModalProps> = (
                 </div>
 
                 <div className="p-3.5 bg-slate-950/60 border border-slate-800 rounded-xl">
-                  <h5 className="font-bold text-white mb-1">Context Injection Strategy:</h5>
+                  <h3 className="font-bold text-white mb-1">Context Injection Strategy:</h3>
                   <ul className="list-disc list-inside space-y-1 text-slate-400">
                     <li>Dynamic injection of live AQI, PM2.5, PM10, temperature, and wind.</li>
                     <li>Deep family profile injection (infants, elderly, pregnancy, asthma, draft tightness).</li>

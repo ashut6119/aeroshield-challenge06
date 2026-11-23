@@ -44,20 +44,25 @@ export const SmogDashboard: React.FC<SmogDashboardProps> = ({
 
         {/* Station Preset Pills & Refresh */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex flex-wrap items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
-            {HOTSPOT_STATIONS.map((st) => (
-              <button
-                key={st.city}
-                onClick={() => onSelectStation(st)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
-                  airQuality.city.includes(st.city.split(' ')[0])
-                    ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                }`}
-              >
-                {st.city.split(' ')[0]}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800" role="group" aria-label="Select smog hotspot city">
+            {HOTSPOT_STATIONS.map((st) => {
+              const isSelected = airQuality.city.includes(st.city.split(' ')[0]);
+              return (
+                <button
+                  key={st.city}
+                  onClick={() => onSelectStation(st)}
+                  aria-pressed={isSelected}
+                  aria-label={`Select ${st.city}, ${st.country}`}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+                    isSelected
+                      ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20 font-semibold'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                  }`}
+                >
+                  {st.city.split(' ')[0]}
+                </button>
+              );
+            })}
           </div>
 
           <button
@@ -65,8 +70,9 @@ export const SmogDashboard: React.FC<SmogDashboardProps> = ({
             disabled={isRefreshing}
             className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700/60 transition disabled:opacity-50"
             title="Refresh Live Sensor Data"
+            aria-label="Refresh live sensor data"
           >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-emerald-400' : ''}`} aria-hidden="true" />
           </button>
         </div>
       </div>

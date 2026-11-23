@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, Send, Sparkles, Bot, User, ChevronDown, Code2, AlertCircle, HelpCircle } from 'lucide-react';
+import { Send, Sparkles, Bot, User, HelpCircle } from 'lucide-react';
 import { ChatMessage, FamilyProfile, AirQualityData } from '../types';
 import { askSmogAdvisor } from '../services/gemini';
 
@@ -79,7 +79,7 @@ Ask me anything about DIY air purification, door sealing, mask fitting, child in
         reasoningSteps: response.reasoning
       };
       setMessages(prev => [...prev, assistantMsg]);
-    } catch (err: any) {
+    } catch (_err: unknown) {
       setMessages(prev => [
         ...prev,
         {
@@ -118,7 +118,7 @@ Ask me anything about DIY air purification, door sealing, mask fitting, child in
       </div>
 
       {/* Messages Scroll Area */}
-      <div className="flex-1 overflow-y-auto py-4 space-y-4 pr-1">
+      <div role="log" aria-live="polite" aria-label="Chat messages with AI Smog Doctor" className="flex-1 overflow-y-auto py-4 space-y-4 pr-1">
         {messages.map((msg) => {
           const isUser = msg.role === 'user';
           return (
@@ -211,18 +211,21 @@ Ask me anything about DIY air purification, door sealing, mask fitting, child in
           className="flex items-center gap-2"
         >
           <input
+            id="advisor-chat-input"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            aria-label="Type your message about indoor hacks, DIY filters, mask reuse, or symptom triage"
             placeholder="Ask about indoor hacks, DIY filters, mask reuse, child play..."
-            className="flex-1 bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none transition"
+            className="flex-1 bg-slate-950 border border-slate-800 focus:border-emerald-500 rounded-xl px-4 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 transition"
           />
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="p-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl shadow-md shadow-emerald-500/20 transition disabled:opacity-40"
+            aria-label="Send message to AI Smog Doctor"
+            className="p-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl shadow-md shadow-emerald-500/20 transition disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-emerald-400"
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-4 h-4" aria-hidden="true" />
           </button>
         </form>
       </div>

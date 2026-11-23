@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wrench, ShieldAlert, CheckCircle, Calculator, ChevronRight, Sliders, ExternalLink, Leaf, AlertTriangle, Lightbulb } from 'lucide-react';
+import { Wrench, ShieldAlert, CheckCircle, Calculator, ChevronRight, AlertTriangle, Lightbulb } from 'lucide-react';
 import { INDOOR_HACKS_LIBRARY } from '../data/indoorHacks';
 import { calculateCadrRequirements } from '../services/cadrCalculator';
 import { IndoorHack } from '../types';
@@ -57,36 +57,39 @@ export const IndoorHacksStudio: React.FC = () => {
             
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-[11px] font-semibold text-slate-400 mb-1">Length (ft)</label>
+                <label htmlFor="cadr-length" className="block text-[11px] font-semibold text-slate-400 mb-1">Length (ft)</label>
                 <input
+                  id="cadr-length"
                   type="number"
                   min="8"
                   max="40"
                   value={lengthFt}
                   onChange={(e) => setLengthFt(Number(e.target.value) || 10)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-mono"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-mono focus-visible:ring-2 focus-visible:ring-emerald-400"
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-slate-400 mb-1">Width (ft)</label>
+                <label htmlFor="cadr-width" className="block text-[11px] font-semibold text-slate-400 mb-1">Width (ft)</label>
                 <input
+                  id="cadr-width"
                   type="number"
                   min="8"
                   max="40"
                   value={widthFt}
                   onChange={(e) => setWidthFt(Number(e.target.value) || 10)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-mono"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-mono focus-visible:ring-2 focus-visible:ring-emerald-400"
                 />
               </div>
               <div>
-                <label className="block text-[11px] font-semibold text-slate-400 mb-1">Ceiling (ft)</label>
+                <label htmlFor="cadr-height" className="block text-[11px] font-semibold text-slate-400 mb-1">Ceiling (ft)</label>
                 <input
+                  id="cadr-height"
                   type="number"
                   min="7"
                   max="16"
                   value={heightFt}
                   onChange={(e) => setHeightFt(Number(e.target.value) || 9)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-mono"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-mono focus-visible:ring-2 focus-visible:ring-emerald-400"
                 />
               </div>
             </div>
@@ -94,17 +97,22 @@ export const IndoorHacksStudio: React.FC = () => {
             {/* Target Air Changes Per Hour Slider */}
             <div>
               <div className="flex items-center justify-between text-xs text-slate-300 mb-1">
-                <span>Target Air Changes Per Hour (ACH):</span>
+                <label htmlFor="cadr-ach">Target Air Changes Per Hour (ACH):</label>
                 <span className="font-bold text-emerald-400">{targetAch} ACH ({targetAch >= 5 ? 'Severe Smog Safe' : 'Standard Clean'})</span>
               </div>
               <input
+                id="cadr-ach"
                 type="range"
                 min="3"
                 max="8"
                 step="1"
                 value={targetAch}
+                aria-valuemin={3}
+                aria-valuemax={8}
+                aria-valuenow={targetAch}
+                aria-label="Target air changes per hour"
                 onChange={(e) => setTargetAch(Number(e.target.value))}
-                className="w-full accent-emerald-500 cursor-pointer"
+                className="w-full accent-emerald-500 cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400"
               />
               <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
                 <span>3 ACH (Normal)</span>

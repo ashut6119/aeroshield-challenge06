@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, Printer, Shield, AlertTriangle, CheckCircle, HeartPulse, Clock, Sparkles } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { X, Printer, Shield, Sparkles } from 'lucide-react';
 import { FamilyProfile, AirQualityData } from '../types';
 
 interface ActionPlanPrintableProps {
@@ -15,30 +15,48 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
   profile,
   airQuality
 }) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent): void => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
-  const handlePrint = () => {
+  const handlePrint = (): void => {
     window.print();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="action-plan-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn"
+    >
       <div className="bg-white text-slate-900 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] flex flex-col overflow-hidden">
         
         {/* Close Button (No print) */}
         <div className="no-print absolute top-4 right-4 flex items-center gap-2">
           <button
+            type="button"
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition"
+            aria-label="Print or Save PDF Emergency Action Plan"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition focus-visible:ring-2 focus-visible:ring-emerald-400"
           >
-            <Printer className="w-4 h-4" />
+            <Printer className="w-4 h-4" aria-hidden="true" />
             <span>Print / Save PDF</span>
           </button>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition"
+            aria-label="Close Emergency Action Plan modal"
+            className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-500 hover:text-slate-900 transition focus-visible:ring-2 focus-visible:ring-slate-400"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -50,10 +68,10 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="p-2 bg-emerald-600 text-white rounded-lg">
-                  <Shield className="w-5 h-5" />
+                  <Shield className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-black tracking-tight text-slate-900">
+                  <h1 id="action-plan-title" className="text-xl font-black tracking-tight text-slate-900">
                     AeroShield Family Smog Survival Plan
                   </h1>
                   <p className="text-xs text-slate-600 font-medium">
@@ -79,7 +97,7 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
           {/* Golden Rules */}
           <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-3.5">
             <h2 className="text-xs font-extrabold uppercase tracking-wider text-emerald-900 mb-2 flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-emerald-700" /> 3 Golden Rules for Severe Smog Days
+              <Sparkles className="w-4 h-4 text-emerald-700" aria-hidden="true" /> 3 Golden Rules for Severe Smog Days
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
               <div className="bg-white p-2.5 rounded-lg border border-emerald-200">
@@ -105,7 +123,7 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               
               <div className="border border-slate-200 rounded-xl p-3 space-y-1.5">
-                <strong className="text-slate-900 block font-bold">🚪 Entryway & Doors:</strong>
+                <strong className="text-slate-900 block font-bold">Entryway & Doors:</strong>
                 <ul className="space-y-1 text-slate-600">
                   <li>• Damp rolled cotton towel wedged under exterior front door.</li>
                   <li>• Remove smog-exposed jackets & shoes at door threshold.</li>
@@ -114,7 +132,7 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
               </div>
 
               <div className="border border-slate-200 rounded-xl p-3 space-y-1.5">
-                <strong className="text-slate-900 block font-bold">🍳 Kitchen & Cooking:</strong>
+                <strong className="text-slate-900 block font-bold">Kitchen & Cooking:</strong>
                 <ul className="space-y-1 text-slate-600">
                   <li>• Turn exhaust fan on 2 mins BEFORE cooking; shut kitchen door.</li>
                   <li>• Keep pan lids tightly on; avoid open deep frying after 6 PM.</li>
@@ -123,7 +141,7 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
               </div>
 
               <div className="border border-slate-200 rounded-xl p-3 space-y-1.5">
-                <strong className="text-slate-900 block font-bold">🛏️ Bedroom Sanctuary:</strong>
+                <strong className="text-slate-900 block font-bold">Bedroom Sanctuary:</strong>
                 <ul className="space-y-1 text-slate-600">
                   <li>• Position air purifier / DIY Corsi-Rosenthal near headboard.</li>
                   <li>• Run on High for 45 mins before bedtime; drop to Low for sleep.</li>
@@ -132,7 +150,7 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
               </div>
 
               <div className="border border-slate-200 rounded-xl p-3 space-y-1.5">
-                <strong className="text-slate-900 block font-bold">🚗 Transit & Commute:</strong>
+                <strong className="text-slate-900 block font-bold">Transit & Commute:</strong>
                 <ul className="space-y-1 text-slate-600">
                   <li>• Avoid two-wheelers/walking during 6:30-9:00 AM rush.</li>
                   <li>• Car recirculate mode ON; avoid engine idling at school gates.</li>
@@ -146,13 +164,13 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
           {/* Mask & Vulnerability Protocol */}
           <div className="border-t border-slate-200 pt-3 flex flex-col sm:flex-row justify-between gap-4 text-xs">
             <div>
-              <strong className="text-slate-900 block font-bold mb-1">🎭 Respirator Protocol:</strong>
+              <strong className="text-slate-900 block font-bold mb-1">Respirator Protocol:</strong>
               <p className="text-slate-600 leading-relaxed">
                 Use certified N95 / KF94 / FFP2 respirators. Form the aluminum wire tightly to the nasal bridge. Store masks in labeled breathable brown paper bags for 72 hours between uses.
               </p>
             </div>
             <div>
-              <strong className="text-slate-900 block font-bold mb-1">🚨 Emergency Warning Signs:</strong>
+              <strong className="text-slate-900 block font-bold mb-1">Emergency Warning Signs:</strong>
               <p className="text-slate-600 leading-relaxed">
                 Persistent wheezing unresponsive to rescue inhalers, infant chest retractions, or bluish lips require immediate emergency medical care.
               </p>

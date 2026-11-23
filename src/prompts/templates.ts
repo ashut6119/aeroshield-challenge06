@@ -92,6 +92,7 @@ Respond with high medical precision, actionable DIY engineering, and compassiona
 
 export function buildEmergencyActionPlanPrompt(profile: FamilyProfile, aqi: AirQualityData): string {
   return `Create a concise, 1-page "Emergency Winter Smog Survival Card" suitable for printing and sticking on the family refrigerator.
+Current local status: AQI ${aqi.aqi} (${aqi.severityLabel}), PM2.5 ${aqi.pm25} µg/m³, Inversion: ${aqi.inversionRisk}.
 Include:
 1. Golden Rules for Tomorrow (Top 3 actions).
 2. High-Risk Vulnerability Warnings tailored for ${profile.familyNickname}.

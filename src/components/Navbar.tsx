@@ -13,11 +13,11 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({
   airQuality,
-  profile,
+  profile: _profile,
   onOpenApiKeyModal,
   onOpenPromptModal,
   hasApiKey,
-  selectedModel
+  selectedModel: _selectedModel
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
@@ -70,26 +70,28 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={onOpenPromptModal}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 transition-colors"
             title="Inspect System Prompts, JSON Schemas & Guardrails"
+            aria-label="Inspect System Prompts, JSON Schemas and Guardrails"
           >
-            <Code2 className="w-4 h-4 text-indigo-400" />
+            <Code2 className="w-4 h-4 text-indigo-400" aria-hidden="true" />
             <span className="hidden sm:inline">Prompt Architecture</span>
           </button>
 
           {/* Gemini API Key & Model Configuration */}
           <button
             onClick={onOpenApiKeyModal}
+            aria-label={hasApiKey ? 'Gemini 2.0 Active - Configure API Key and Model' : 'Setup Gemini API Key'}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
               hasApiKey
                 ? 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
                 : 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border-amber-500/30'
             }`}
           >
-            <Sparkles className={`w-3.5 h-3.5 ${hasApiKey ? 'text-emerald-400' : 'text-amber-400'}`} />
+            <Sparkles className={`w-3.5 h-3.5 ${hasApiKey ? 'text-emerald-400' : 'text-amber-400'}`} aria-hidden="true" />
             <span className="hidden sm:inline">
               {hasApiKey ? 'Gemini 2.0 Active' : 'Setup Gemini Key'}
             </span>
             <span className="sm:hidden">
-              <Key className="w-3.5 h-3.5" />
+              <Key className="w-3.5 h-3.5" aria-hidden="true" />
             </span>
           </button>
         </div>
