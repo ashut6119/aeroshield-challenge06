@@ -28,9 +28,9 @@ export const IndoorHacksStudio: React.FC = () => {
             Science-Backed
           </span>
         </div>
-        <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
+        <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
           High-Efficiency DIY Air Purifier & Seal Hacks
-        </h3>
+        </h2>
         <p className="text-xs text-slate-400">
           Transform ordinary household hardware into hospital-grade particle filtration systems at 1/5th the commercial cost.
         </p>
@@ -40,10 +40,10 @@ export const IndoorHacksStudio: React.FC = () => {
       <div className="bg-slate-950/90 border border-slate-800 rounded-2xl p-5 sm:p-6 relative overflow-hidden">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4">
           <div className="flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-emerald-400" />
-            <h4 className="text-base font-bold text-white">
+            <Calculator className="w-5 h-5 text-emerald-400" aria-hidden="true" />
+            <h3 className="text-base font-bold text-white">
               Corsi-Rosenthal Box & CADR Sizing Calculator
-            </h4>
+            </h3>
           </div>
           <span className="text-xs font-mono text-emerald-300 bg-emerald-950/60 border border-emerald-800/80 px-2.5 py-1 rounded-lg">
             Standard: 4-6 Air Changes/Hour

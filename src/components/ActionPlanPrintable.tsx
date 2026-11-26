@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X, Printer, Shield, Sparkles } from 'lucide-react';
 import { FamilyProfile, AirQualityData } from '../types';
 
@@ -15,8 +15,11 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
   profile,
   airQuality
 }) => {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     if (!isOpen) return;
+    closeButtonRef.current?.focus();
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') onClose();
     };
@@ -51,6 +54,7 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
             <span>Print / Save PDF</span>
           </button>
           <button
+            ref={closeButtonRef}
             type="button"
             onClick={onClose}
             aria-label="Close Emergency Action Plan modal"
@@ -71,9 +75,9 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
                   <Shield className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div>
-                  <h1 id="action-plan-title" className="text-xl font-black tracking-tight text-slate-900">
+                  <h2 id="action-plan-title" className="text-xl font-black tracking-tight text-slate-900">
                     AeroShield Family Smog Survival Plan
-                  </h1>
+                  </h2>
                   <p className="text-xs text-slate-600 font-medium">
                     Personalized Winter Defense Protocol • Keep Posted on Refrigerator
                   </p>
@@ -96,9 +100,9 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
 
           {/* Golden Rules */}
           <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-3.5">
-            <h2 className="text-xs font-extrabold uppercase tracking-wider text-emerald-900 mb-2 flex items-center gap-1.5">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-emerald-900 mb-2 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-emerald-700" aria-hidden="true" /> 3 Golden Rules for Severe Smog Days
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
               <div className="bg-white p-2.5 rounded-lg border border-emerald-200">
                 <strong className="block text-emerald-800 mb-0.5">1. Windows Clamped</strong>
@@ -117,9 +121,9 @@ export const ActionPlanPrintable: React.FC<ActionPlanPrintableProps> = ({
 
           {/* Room-by-Room Defense Checklist */}
           <div>
-            <h2 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-2">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-2">
               Room-by-Room Smog Shielding Checklist
-            </h2>
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               
               <div className="border border-slate-200 rounded-xl p-3 space-y-1.5">

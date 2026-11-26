@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, Wrench, MessageSquare, Printer, Compass, Code2 } from 'lucide-react';
 import { AirQualityData, FamilyProfile, RoutineItem, TabType } from './types';
 import { HOTSPOT_STATIONS, fetchAirQualityForStation, StationPreset } from './services/airQuality';
@@ -135,17 +135,19 @@ export function App() {
           {/* Quick Action Badges */}
           <div className="flex flex-wrap items-center gap-2 shrink-0">
             <button
+              type="button"
               onClick={() => setIsPromptModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 transition shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 transition shadow-sm focus-visible:ring-2 focus-visible:ring-indigo-400"
             >
-              <Code2 className="w-4 h-4 text-indigo-400" />
+              <Code2 className="w-4 h-4 text-indigo-400" aria-hidden="true" />
               <span>Prompt Architecture</span>
             </button>
             <button
+              type="button"
               onClick={() => setIsPrintModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-400"
             >
-              <Printer className="w-4 h-4 text-emerald-400" />
+              <Printer className="w-4 h-4 text-emerald-400" aria-hidden="true" />
               <span>Print Fridge Plan</span>
             </button>
           </div>
@@ -153,7 +155,7 @@ export function App() {
       </div>
 
       {/* Main Tab Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
+      <nav aria-label="Main Application Navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full">
         <div role="tablist" aria-label="Main Application Views" className="flex items-center gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto scrollbar-none shadow-lg">
           {[
             { id: 'dashboard' as TabType, label: '1. Smog Dashboard & Stations', icon: <Compass className="w-4 h-4" aria-hidden="true" /> },
@@ -163,6 +165,7 @@ export function App() {
           ].map((tab) => (
             <button
               key={tab.id}
+              id={`tab-${tab.id}`}
               type="button"
               role="tab"
               aria-selected={activeTab === tab.id}
@@ -179,7 +182,7 @@ export function App() {
             </button>
           ))}
         </div>
-      </div>
+      </nav>
 
       {/* Main Content Area */}
       <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full flex-1 space-y-6 focus:outline-none">
@@ -194,7 +197,7 @@ export function App() {
 
         {/* Tab 1: Smog Dashboard */}
         {activeTab === 'dashboard' && (
-          <div className="space-y-6 animate-fadeIn">
+          <div id="panel-dashboard" role="tabpanel" aria-labelledby="tab-dashboard" className="space-y-6 animate-fadeIn">
             <SmogDashboard
               airQuality={airQuality}
               onSelectStation={handleSelectStation}
@@ -205,14 +208,15 @@ export function App() {
             {/* Teaser to Next Step */}
             <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <h4 className="text-sm font-bold text-white">Next Step: View Personalized Smog Routine</h4>
+                <h2 className="text-sm font-bold text-white">Next Step: View Personalized Smog Routine</h2>
                 <p className="text-xs text-slate-400">
                   AeroShield has synchronized with the {selectedStation.city} temperature inversion curve for {profile.familyNickname}.
                 </p>
               </div>
               <button
+                type="button"
                 onClick={() => setActiveTab('routine')}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-600/20 whitespace-nowrap"
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-600/20 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-emerald-400"
               >
                 Open 24h Routine &rarr;
               </button>
@@ -222,7 +226,7 @@ export function App() {
 
         {/* Tab 2: 24h Low-Emission Routine */}
         {activeTab === 'routine' && (
-          <div className="space-y-6 animate-fadeIn">
+          <div id="panel-routine" role="tabpanel" aria-labelledby="tab-routine" className="space-y-6 animate-fadeIn">
             <RoutineGenerator
               routines={routines}
               profile={profile}
@@ -237,14 +241,14 @@ export function App() {
 
         {/* Tab 3: Indoor Hacks Studio */}
         {activeTab === 'hacks' && (
-          <div className="space-y-6 animate-fadeIn">
+          <div id="panel-hacks" role="tabpanel" aria-labelledby="tab-hacks" className="space-y-6 animate-fadeIn">
             <IndoorHacksStudio />
           </div>
         )}
 
         {/* Tab 4: AI Smog Doctor Chat */}
         {activeTab === 'advisor' && (
-          <div className="space-y-6 animate-fadeIn">
+          <div id="panel-advisor" role="tabpanel" aria-labelledby="tab-advisor" className="space-y-6 animate-fadeIn">
             <SmogAdvisorChat
               profile={profile}
               airQuality={airQuality}

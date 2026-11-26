@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Key, CheckCircle, ExternalLink, ShieldCheck, Cpu, AlertCircle } from 'lucide-react';
 import {
   SUPPORTED_MODELS,
@@ -20,10 +20,12 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ isOpen, onClose, onKey
   const [apiKey, setApiKey] = useState(getStoredApiKey());
   const [model, setModel] = useState(getStoredModel());
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Close on Escape
+  // Close on Escape and focus close button on open
   useEffect(() => {
     if (!isOpen) return;
+    closeButtonRef.current?.focus();
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') onClose();
     };
@@ -58,6 +60,7 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ isOpen, onClose, onKey
         
         {/* Close button */}
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close API configuration modal"

@@ -86,9 +86,9 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
               Tailored for {profile.familyNickname.split('(')[0]}
             </span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
+          <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
             Diurnal Low-Emission Routine & Health Hacks
-          </h3>
+          </h2>
           <p className="text-xs text-slate-400">
             Engineered to decouple family transit and cooking from peak inversion hours.
           </p>
@@ -102,8 +102,9 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={onOpenPrintModal}
-            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition"
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 transition focus-visible:ring-2 focus-visible:ring-emerald-400"
             title="Export 1-Page Emergency Action Plan"
             aria-label="Export 1-Page Emergency Action Plan for printing"
           >
@@ -129,12 +130,13 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
         ].map((tab) => (
           <button
             key={tab.id}
+            type="button"
             role="tab"
             aria-selected={selectedPhase === tab.id}
             aria-controls="routines-list"
             id={`tab-phase-${tab.id}`}
             onClick={() => setSelectedPhase(tab.id)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all focus-visible:ring-2 focus-visible:ring-emerald-400 ${
               selectedPhase === tab.id
                 ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                 : 'bg-slate-950/70 text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-slate-800'
@@ -167,6 +169,7 @@ export const RoutineGenerator: React.FC<RoutineGeneratorProps> = ({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2.5">
                   <button
+                    type="button"
                     role="checkbox"
                     aria-checked={isDone}
                     aria-label={`Mark routine "${item.title}" as ${isDone ? 'incomplete' : 'complete'}`}

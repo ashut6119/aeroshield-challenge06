@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Code2, ShieldCheck, Terminal, Layers, Sparkles } from 'lucide-react';
 import { SYSTEM_INSTRUCTION_SMOG_ASSISTANT } from '../prompts/templates';
 import { PROMPT_INSPECTION_LOG } from '../services/gemini';
@@ -11,10 +11,12 @@ interface PromptArchitectureModalProps {
 
 export const PromptArchitectureModal: React.FC<PromptArchitectureModalProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<PromptTabType>('system');
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Handle keyboard Escape key to close modal
+  // Handle keyboard Escape key to close modal and focus close button on open
   useEffect(() => {
     if (!isOpen) return;
+    closeButtonRef.current?.focus();
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.key === 'Escape') onClose();
     };
@@ -35,6 +37,7 @@ export const PromptArchitectureModal: React.FC<PromptArchitectureModalProps> = (
         
         {/* Close Button */}
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close Prompt Architecture modal"
